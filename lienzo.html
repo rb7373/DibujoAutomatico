@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dibujar</title>
+<link href="lienzo.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<style>
+/*div {
+  position:absolute;
+  background-color:#abc;
+  left:50px;
+  width:90px;
+  height:90px;
+  margin:5px;
+}*/
+
+.mover {
+	background-repeat: no-repeat;
+	position: absolute;
+	z-index: 5;
+	background-image: url("edit-icon.png");
+	/*background-color : blue;*/
+	width: 48px;
+	height: 48px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+</style>
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="puntosJS.js"></script>
+
+</head>
+
+<body>
+
+<input type="button" style="background-color:#000000;color:#ffffff;padding:3px;font-size:19px;" onClick="entPoints()" value="Dibujar"/><br/><br />
+
+<div > 
+Por favor presione "Dibujar"
+</div>
+
+<canvas id="draws" width="3000" height="3000" style="border:1px solid #000000;"><br />
+     Your browser does not support HTML5 Canvas.<br />
+</canvas><br />
+
+
+<div class="mover"> 
+</div>
+
+<script>
+
+
+var canvas;
+var context;
+var count = 0;
+var inter;
+var clr=0;
+var rutasDibujadas = 0;
+var xyPoints;
+
+var points = {
+  linePoint : []
+};
+
+var tiempoEspera = 0; //Tiempo estre la ainimacion de cada punto
+
+function Point(x,y) {
+  this.x = x;
+  this.y = y;
+}
+function entPoints() {
+
+
+	if (rutasDibujadas >= puntosRutaCompleta.length)
+	{
+		completarDibujo();
+	}
+
+  points.linePoint.length = 0; 
+
+  xyPoints = puntosRutaCompleta[rutasDibujadas];
+  
+  for(var i = 0; i < xyPoints.length; i++) {
+    var x = xyPoints[i][0];
+    var y = xyPoints[i][1];
+    points.linePoint.push(new Point(x,y));
+  }
+  inter = setInterval("drawPoints()",tiempoEspera);
+}
+function drawPoints() {
+
+//Caracteristicas
+   canvas = document.getElementById('draws');
+   ctx = canvas.getContext("2d");
+   ctx.strokeStyle = "#C9BE62";
+   ctx.lineWidth = 1;
+   ctx.shadowColor='rgba(0,0,0,0.9)';
+//Caracteristicas
+   
+   if(count == 0) {
+     ctx.beginPath();	
+     ctx.moveTo(points.linePoint[count].x, points.linePoint[count].y);
+   } else {
+     ctx.moveTo(points.linePoint[count-1].x, points.linePoint[count-1].y);
+     ctx.lineTo(points.linePoint[count].x, points.linePoint[count].y);
+   }
+   
+   ctx.stroke();
+   
+   var posX = points.linePoint[count].x + getX(canvas);
+   var posY = points.linePoint[count].y + getY(canvas) - 48 ; //El tamaño de la imagen del lapiz que escribe
+   
+   posX +="";
+   posY +="";
+   
+   $(".mover").animate({
+	   "top": posY,
+	   "left": posX
+	   }, 0);
+   
+   count++;
+   
+   if(count == xyPoints.length) {
+	   rutasDibujadas++;
+	   count = 0; //Se reinicia el contador
+     clearInterval(inter); 
+	 entPoints(); 
+   }    
+   
+}
+
+
+function getX( oElement )
+{
+  var iReturnValue = 0;
+  while( oElement != null ) {
+    iReturnValue += oElement.offsetLeft;
+    oElement = oElement.offsetParent;
+  }
+  return iReturnValue;
+}
+
+function getY( oElement )
+{
+  var iReturnValue = 0;
+  while( oElement != null ) {
+    iReturnValue += oElement.offsetTop;
+    oElement = oElement.offsetParent;
+  }
+  return iReturnValue;
+}
+
+</script>
+
+<button id="left">&laquo;</button> <button id="right">&raquo;</button>
+<div class="block"></div>
+
+
+</body>
+</html>
