@@ -1,12 +1,8 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Dibujar</title>
-  <link href="lienzo.css" rel="stylesheet" type="text/css">
-  <!--[if lt IE 9]>
-  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
 
   <style>
     /*div {
@@ -22,7 +18,7 @@
       background-repeat: no-repeat;
       position: absolute;
       z-index: 5;
-      background-image: url("edit-icon.png");
+      background-image: url("src/img/edit-icon.png");
       /*background-color : blue;*/
       width: 48px;
       height: 48px;
@@ -32,32 +28,51 @@
 
   </style>
 
-  <script type="text/javascript" src="jquery.min.js"></script>
-  <script type="text/javascript" src="puntosJS.js"></script>
-
 </head>
-
 <body>
 
-<input type="button" style="background-color:#000000;color:#ffffff;padding:3px;font-size:19px;" onClick="entPoints()"
-       value="Dibujar"/><br/><br/>
+<div class="container">
 
-<div>
-  Por favor presione "Dibujar"
+  <canvas id="draws" width="600" height="600" style="border:1px solid #000000;"><br/>
+    Your browser does not support HTML5 Canvas.<br/>
+  </canvas>
+
+  <div class="row">
+    <input type="button" style="background-color:#000000;color:#ffffff;padding:3px;font-size:19px;"
+           onClick="initAnimation()" value="Dibujar"/><br/><br/>
+
+    <div>
+      Por favor presione "Dibujar"
+    </div>
+
+
+    <br/>
+
+    <div class="mover">
+    </div>
+
+  </div>
 </div>
 
-<canvas id="draws" width="3000" height="3000" style="border:1px solid #000000;"><br/>
-  Your browser does not support HTML5 Canvas.<br/>
-</canvas>
-<br/>
-
-
-<div class="mover">
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <textarea id="canvasCode"></textarea>
+      <input type="button" value="Get points" onclick="manager.getPoints()">
+    </div>
+  </div>
 </div>
+
+
+
+<script src="src/js/jquery-2.1.4.js"></script>
+<script src="src/js/mathManager.js"></script>
+<script src="src/js/svgManager.js"></script>
+<script src="src/js/manager.js"></script>
 
 <script>
 
-
+  var puntosRutaCompleta;
   var canvas;
   var context;
   var count = 0;
@@ -76,24 +91,35 @@
     this.x = x;
     this.y = y;
   }
+
+  function initAnimation(){
+    puntosRutaCompleta = manager.getPoints();
+    entPoints();
+  }
+
   function entPoints() {
 
+    //var stringCanvasCode = document.querySelector('#canvasCode').value;
 
     if (rutasDibujadas >= puntosRutaCompleta.length) {
-      completarDibujo();
+      //completarDibujo();
+      return;
     }
 
     points.linePoint.length = 0;
 
     xyPoints = puntosRutaCompleta[rutasDibujadas];
 
+    console.log('PUNTOS ACTUALES', puntosRutaCompleta);
+
     for (var i = 0; i < xyPoints.length; i++) {
-      var x = xyPoints[i][0];
-      var y = xyPoints[i][1];
+      var x = xyPoints[i].x;
+      var y = xyPoints[i].y;
       points.linePoint.push(new Point(x, y));
     }
     inter = setInterval("drawPoints()", tiempoEspera);
   }
+
   function drawPoints() {
 
 //Caracteristicas
@@ -156,11 +182,6 @@
   }
 
 </script>
-
-<button id="left">&laquo;</button>
-<button id="right">&raquo;</button>
-<div class="block"></div>
-
 
 </body>
 </html>

@@ -13976,6 +13976,10 @@ canvasHTML2 = canvasHTML
 ##Se elimininan los canbios de linea
 canvasHTML2 = canvasHTML2.replace("\n","")
 
+
+print(canvasHTML2)
+
+
 ##Se eliminina el ultimo ";" (queda vacio)
 canvasHTML2 = canvasHTML2[:-1]
 
@@ -14077,7 +14081,7 @@ for instruccionActual in instrucciones:
                 puntoFinal[1] = float(puntosObtenidos[1])
 
                 
-                rutaActual += ([puntoInicial,puntoFinal])
+                rutaActual += getCasteljau([puntoInicial,puntoFinal])
 
 ##                #print ("Ruta actual:", rutaActual)
 

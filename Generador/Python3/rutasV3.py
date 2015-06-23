@@ -23,6 +23,7 @@ def getPunto(p0, p1, p2, p3, p4, p5, t):
         return [x,y]
 
 def getCasteljau(pListaPuntos):
+        print('lista puntos: ');
         t = 0.0
         listaResultante = []
         while t <= 1:
@@ -30,6 +31,7 @@ def getCasteljau(pListaPuntos):
                 ##print ("t: ", t)
                 puntoTemporal = getCasteljauPofloat(len(pListaPuntos)-1, 0, t,pListaPuntos)
                 listaResultante.append(puntoTemporal)
+                ##print('lista actual', listaResultante)
                 ##print ("Punto generado: ", puntoTemporal)
 
         return listaResultante
@@ -13973,6 +13975,10 @@ puntoOrigen = [0,0]
 
 canvasHTML2 = canvasHTML
 
+f = open("RUTAS-canvas-svg.txt", "w+")
+f.write(str(canvasHTML2))
+f.close()
+
 ##Se elimininan los canbios de linea
 canvasHTML2 = canvasHTML2.replace("\n","")
 
@@ -14002,26 +14008,32 @@ for instruccionActual in instrucciones:
 
         if instruccionActual.find("translate") != -1:
                 
-                #print ("trasladando coordenadas")
+                print ("translate")
                 inicio = instruccionActual.find("(")
                 final = instruccionActual.find(")")
                 subInstruccion = instruccionActual[inicio+1:final]
                 ##print ("SubIns :", subInstruccion)
                 puntosObtenidos = subInstruccion.split(",")
-                #print ("Puntos obtenidos :", puntosObtenidos)
+                print ("Puntos obtenidos :", puntosObtenidos)
                 ##print (subInstruccion) 
                 puntoOrigen[0] = float(puntosObtenidos[0])
                 puntoOrigen[1] = float(puntosObtenidos[1])
 
         elif instruccionActual.find("beginPath") != -1:
                 #reinicia los parametros del trazado, ejemplo strokeStyle="purple"; // Purple path
-                print ("iniciando nuevo trazo")
+                print ("beginPath")
                 
         elif instruccionActual.find("closePath") != -1:
 
-                #print ("cerrando trazo")
+                print ("closePath")
+
+                puntos = getCasteljau([puntoFinal,puntoOrigenRuta])
+
+                print('---------')
+                print(puntos)
+                print('---------')
                 
-                rutaActual += getCasteljau([puntoFinal,puntoOrigenRuta])
+                rutaActual += puntos
 
                 puntoFinal[0] = puntoOrigenRuta[0]
                 puntoFinal[1] = puntoOrigenRuta[1]
@@ -14031,6 +14043,8 @@ for instruccionActual in instrucciones:
                 
 
         elif instruccionActual.find("moveTo") != -1:
+
+                print ("moveTo")
 
                 if len(rutaActual) != 0:
                         #Se agrega la ruta formada hasta el momento
@@ -14061,7 +14075,7 @@ for instruccionActual in instrucciones:
 
         elif instruccionActual.find("lineTo") != -1:
                 
-                #print ("trazando linea recta")
+                print ("lineTo")
                 inicio = instruccionActual.find("(")
                 final = instruccionActual.find(")")
                 subInstruccion = instruccionActual[inicio+1:final]
@@ -14087,25 +14101,25 @@ for instruccionActual in instrucciones:
 
 
         elif instruccionActual.find("scale") != -1:
-                print ("cambio de escala")
+                print ("scale")
 
         elif instruccionActual.find("strokeStyle") != -1:
-                print ("cambio de estilo de borde")
+                print ("strokeStyle")
 
         elif instruccionActual.find("lineCap") != -1:
-                print ("cambio de estilo fin de borde")
+                print ("lineCap")
 
         elif instruccionActual.find("lineJoin") != -1:
-                print ("cambio de estilo de union de linea")
+                print ("lineJoin")
 
         elif instruccionActual.find("miterLimit") != -1:
-                print ('''cambio de estilo "miterLimit"''')
+                print ('''"miterLimit"''')
 
         elif instruccionActual.find("fillStyle") != -1:
-                print ('''cambio de estilo de relleno''')
+                print ('''fillStyle''')
 
         elif instruccionActual.find("bezierCurveTo") != -1:
-                #print ('''aplicando curva de bezier''')
+                print ('''bezierCurveTo''')
 
                 inicio = instruccionActual.find("(")
                 final = instruccionActual.find(")")
@@ -14145,6 +14159,9 @@ for instruccionActual in instrucciones:
                 puntoFinal[0] = float(puntosObtenidos[4])
                 puntoFinal[1] = float(puntosObtenidos[5])
 
+        else:
+               print('Undefined instruction: ', instruccionActual)
+
 
 if len(rutaActual) != 0:
         #Se agrega la ruta foramda hasta el momento
@@ -14156,12 +14173,12 @@ rutaActual = []
 #print (rutas[1:])
 
 rutas = rutas[1:]
-##print (rutas)
+print('%%%%%%%%%%%%%%%%%%%%')
+print (rutas)
 
 f = open("RUTAS.txt", "w+")
 f.write(str(rutas))
 f.close()
-
 
 ##
 ##archivo = open("rutas.txt", "w+")

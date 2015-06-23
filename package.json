@@ -1,0 +1,19 @@
+{
+  "name": "DibujoAutomatico",
+  "version": "1.0.0",
+  "description": "DibujoAutomatico ================",
+  "main": "jquery.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rb7373/DibujoAutomatico"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rb7373/DibujoAutomatico/issues"
+  },
+  "homepage": "https://github.com/rb7373/DibujoAutomatico"
+}

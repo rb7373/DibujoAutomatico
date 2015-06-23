@@ -1,0 +1,65 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'npm' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.35
+4 verbose cache add [ 'npm', null ]
+5 verbose cache add name=undefined spec="npm" args=["npm",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'npm',
+6 verbose parsed url   path: 'npm',
+6 verbose parsed url   href: 'npm' }
+7 silly lockFile 660051d1-npm npm
+8 verbose lock npm /home/ruben/.npm/660051d1-npm.lock
+9 silly lockFile 660051d1-npm npm
+10 silly lockFile 660051d1-npm npm
+11 verbose addNamed [ 'npm', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 2f990b75-npm npm@
+14 verbose lock npm@ /home/ruben/.npm/2f990b75-npm.lock
+15 silly addNameRange { name: 'npm', range: '*', hasData: false }
+16 verbose request where is /nexus/content/groups/npm/npm
+17 verbose request registry http://nexusnpm.dev-charter.net:8081/
+18 verbose request id 626e52bf48019d13
+19 verbose url raw /nexus/content/groups/npm/npm
+20 verbose url resolving [ 'http://nexusnpm.dev-charter.net:8081/',
+20 verbose url resolving   './nexus/content/groups/npm/npm' ]
+21 verbose url resolved http://nexusnpm.dev-charter.net:8081/nexus/content/groups/npm/npm
+22 verbose request where is http://nexusnpm.dev-charter.net:8081/nexus/content/groups/npm/npm
+23 info trying registry request attempt 1 at 14:46:48
+24 http GET http://nexusnpm.dev-charter.net:8081/nexus/content/groups/npm/npm
+25 info retry will retry, error on last attempt: Error: connect ETIMEDOUT
+26 info trying registry request attempt 2 at 14:49:06
+27 http GET http://nexusnpm.dev-charter.net:8081/nexus/content/groups/npm/npm
+28 info retry will retry, error on last attempt: Error: connect ETIMEDOUT
+29 info trying registry request attempt 3 at 14:52:13
+30 http GET http://nexusnpm.dev-charter.net:8081/nexus/content/groups/npm/npm
+31 silly lockFile 2f990b75-npm npm@
+32 silly lockFile 2f990b75-npm npm@
+33 error network connect ETIMEDOUT
+33 error network This is most likely not a problem with npm itself
+33 error network and is related to network connectivity.
+33 error network In most cases you are behind a proxy or have bad network settings.
+33 error network
+33 error network If you are behind a proxy, please make sure that the
+33 error network 'proxy' config is set properly.  See: 'npm help config'
+34 error System Linux 3.19.0-21-generic
+35 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "-g" "npm"
+36 error cwd /home/ruben/Documents/Git/FIX/DibujoAutomatico
+37 error node -v v0.10.35
+38 error npm -v 1.4.28
+39 error syscall connect
+40 error code ETIMEDOUT
+41 error errno ETIMEDOUT
+42 verbose exit [ 1, true ]
